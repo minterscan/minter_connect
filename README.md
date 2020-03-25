@@ -1,6 +1,11 @@
-# Minter Connect
+![Logo](img/minter-logo.svg)
 
-Minter Connect is a library that provides connection between your web application and [Minter Link](https://github.com/minterscan/minter_link) extension.
+
+[![NPM Package](https://img.shields.io/npm/v/minter-connect.svg?style=flat-square)](https://www.npmjs.org/package/minter-connect)
+[![Coverage Status](https://coveralls.io/repos/github/minterscan/minter_connect/badge.svg?branch=master)](https://coveralls.io/github/minterscan/minter_connect?branch=master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/minterscan/minter_connect/blob/master/LICENSE)
+
+**Minter Connect** is a library that provides connection between your web application and [Minter Link](https://github.com/minterscan/minter_link) extension.
 
 With Minter Connect you can connect your website to extension, get access to user wallet address, implement Minter authentication and even make one-click payment requests.
 
@@ -12,7 +17,7 @@ npm install minter-connect
 ```
 
 ## Initialize
-Minter Connect takes optional **merchant name** parameter on initialization.
+Minter Connect takes optional `merchant name` parameter on initialization.
 
 ```
 import MinterConnect from 'minter-connect'
