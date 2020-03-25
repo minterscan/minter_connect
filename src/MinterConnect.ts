@@ -1,63 +1,36 @@
-export type MinterLink = {
-  version: string
-  isInstalled: boolean
-  isUnlocked: boolean
-}
-
-export type Obeservers = {
-  [key: string]: Function[]
-}
-
-export type TxData = {
-  address: string
-  amount: string
-  coin: string
-  payload: string
-}
-
-export enum MinterLinkEvent {
-  Version = 'minter:version',
-  IsInstalled = 'minter:is_installed',
-  IsUnlocked = 'minter:is_unlocked',
-  PaymentRequest = 'minter:payment:request',
-  PaymentAccept = 'minter:payment:accept',
-  PaymentReject = 'minter:payment:reject'
-}
-
-export type Merchant = {
-  name: string;
-  url: string;
-}
-
-export type PaymentRequest = {
-  merchant: Merchant;
-  data: {
-    coin: string;
-    amount: string;
-    address: string;
-    payload: string;
-  };
-}
+import {
+  MinterLink,
+  MinterLinkEvent,
+  Merchant,
+  Observers,
+  TxData,
+  SignRequest,
+  PaymentRequest,
+  ObservableProps,
+  SignResponse
+} from './model'
 
 const MERCHANT = {
   name: '',
-  url: ''
+  url: '',
 }
 
 export default class MinterConnect {
-  _merchant: Merchant = MERCHANT
-  _version = ''
-  _isInstalled = false
-  _isUnlocked = false
-  _observers: Obeservers = {
+  private _merchant: Merchant = MERCHANT
+  private _version = ''
+  private _wallet = ''
+  private _isInstalled = false
+  private _isUnlocked = false
+  private _observers: Observers = {
     version: [],
+    wallet: [],
     isInstalled: [],
     isUnlocked: []
   }
 
-  constructor(merchant: Merchant) {
+  constructor(merchantName = '') {
     this.listen()
-    this.setMerchant(merchant)
+    this.setMerchantName(merchantName)
   }
 
   get merchant(): Merchant {
@@ -66,6 +39,10 @@ export default class MinterConnect {
 
   get version(): string {
     return this._version
+  }
+
+  get wallet(): string {
+    return this._wallet
   }
 
   get isInstalled(): boolean {
@@ -79,6 +56,7 @@ export default class MinterConnect {
   get data(): MinterLink {
     return {
       version: this.version,
+      wallet: this.wallet,
       isInstalled: this.isInstalled,
       isUnlocked: this.isUnlocked
     }
@@ -88,67 +66,127 @@ export default class MinterConnect {
    * Listen events from content script
    */
   public listen(): void {
-    const _this = this
-
     document.addEventListener(MinterLinkEvent.IsInstalled, (event: Event) => {
-      const e = event as CustomEvent
-
-      _this.setIsInstalled(e.detail)
+      this.setIsInstalled((event as CustomEvent).detail)
     })
 
     document.addEventListener(MinterLinkEvent.IsUnlocked, (event: Event) => {
-      const e = event as CustomEvent
-
-      _this.setIsUnlocked(e.detail)
+      this.setIsUnlocked((event as CustomEvent).detail)
     })
 
     document.addEventListener(MinterLinkEvent.Version, (event: Event) => {
-      const e = event as CustomEvent
+      this.setVersion((event as CustomEvent).detail)
+    })
 
-      _this.setVersion(e.detail)
+    document.addEventListener(MinterLinkEvent.Wallet, (event: Event) => {
+      this.setWallet((event as CustomEvent).detail)
     })
   }
 
-  private setMerchant(value: Merchant): void {
-    this._merchant = value
+  private setMerchantName(value: string): void {
+    this._merchant.name = value
   }
 
   private setVersion(value: string): void {
     this._version = value
 
-    this.notifySubscribers('version', value)
+    this.notifySubscribers(ObservableProps.Version, value)
   }
 
   private setIsInstalled(value: boolean): void {
     this._isInstalled = value
 
-    this.notifySubscribers('isInstalled', value)
+    this.notifySubscribers(ObservableProps.IsInstalled, value)
   }
 
   private setIsUnlocked(value: boolean): void {
     this._isUnlocked = value
 
-    this.notifySubscribers('isUnlocked', value)
+    this.notifySubscribers(ObservableProps.IsUnlocked, value)
+  }
+
+  private setWallet(value: string): void {
+    this._wallet = value
+
+    this.notifySubscribers(ObservableProps.Wallet, value)
   }
 
   /**
-   * Send payment request to content script and wait for response
+   * Send connect request to content script (reveal active wallet address)
+   */
+  public connectRequest(): Promise<string> {
+    if (!this.isUnlocked) return Promise.reject('Extension locked')
+
+    return new Promise((resolve, reject) => {
+      const detail = {
+        merchant: this.merchant
+      }
+
+      document.addEventListener(MinterLinkEvent.ConnectAccept, event => {
+        return resolve((event as CustomEvent).detail)
+      })
+
+      document.addEventListener(MinterLinkEvent.ConnectReject, () => {
+        return reject('Rejected by user')
+      })
+
+      const event = new CustomEvent(MinterLinkEvent.ConnectRequest, { detail })
+
+      document.dispatchEvent(event)
+    })
+  }
+
+  /**
+   * Send sign request (auth) to content script
+   *
+   * @param message
+   */
+  public signRequest(message: string): Promise<SignResponse> {
+    if (!this.isUnlocked) return Promise.reject('Extension locked')
+    if (!this.wallet) return Promise.reject('Wallet is empty')
+
+    return new Promise((resolve, reject) => {
+      const detail: SignRequest = {
+        merchant: this.merchant,
+        data: {
+          message
+        }
+      }
+
+      document.addEventListener(MinterLinkEvent.SignAccept, event => {
+        resolve((event as CustomEvent).detail)
+      })
+
+      document.addEventListener(MinterLinkEvent.SignReject, () => {
+        return reject('Rejected by user')
+      })
+
+      const event = new CustomEvent(MinterLinkEvent.SignRequest, { detail })
+
+      document.dispatchEvent(event)
+    })
+  }
+
+  /**
+   * Send payment request to content script
    * 
    * @param data 
    */
-  public paymentRequest(data: TxData): Promise<any> {
+  public paymentRequest(data: TxData): Promise<string> {
+    if (!this.isUnlocked) return Promise.reject('Extension locked')
+
     return new Promise((resolve, reject) => {
-      const detail = {
+      const detail: PaymentRequest = {
         merchant: this.merchant,
         data
       }
 
       document.addEventListener(MinterLinkEvent.PaymentAccept, event => {
-        resolve(event)
+        resolve((event as CustomEvent).detail)
       })
 
-      document.addEventListener(MinterLinkEvent.PaymentReject, event => {
-        reject(event)
+      document.addEventListener(MinterLinkEvent.PaymentReject, () => {
+        return reject('Rejected by user')
       })
 
       const event = new CustomEvent(MinterLinkEvent.PaymentRequest, { detail })
@@ -163,7 +201,7 @@ export default class MinterConnect {
    * @param property 
    * @param callback 
    */
-  subscribe(property: string, callback: Function): void {
+  public subscribe(property: keyof MinterLink, callback: Function): void {
     this._observers[property].push(callback)
   }
 
@@ -173,7 +211,7 @@ export default class MinterConnect {
    * @param property 
    * @param value 
    */
-  notifySubscribers(property: string, value: any): void {
+  private notifySubscribers(property: keyof MinterLink, value: boolean|string): void {
     for (let i = 0; i < this._observers[property].length; i++) {
       this._observers[property][i](value)
     }

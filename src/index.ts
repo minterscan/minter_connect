@@ -1,17 +1,24 @@
-import MinterConnect, {
+import MinterConnect from './MinterConnect'
+import {
   MinterLink,
   MinterLinkEvent,
   Merchant,
-  Obeservers,
-  TxData
-} from './MinterConnect'
+  Observers,
+  TxData,
+  SignRequest,
+  ConnectRequest,
+  PaymentRequest
+} from './model'
 
 export {
   MinterLink,
   MinterLinkEvent,
   Merchant,
-  Obeservers,
-  TxData
+  Observers,
+  TxData,
+  SignRequest,
+  ConnectRequest,
+  PaymentRequest
 }
 
 export default MinterConnect

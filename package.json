@@ -1,6 +1,6 @@
 {
   "name": "minter-connect",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Connect your website to Minter network",
   "repository": {
     "type": "git",

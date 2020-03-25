@@ -4,7 +4,7 @@ const MERCHANT = {
     url: '',
 };
 export default class MinterConnect {
-    constructor(merchantName = '') {
+    constructor(merchantName) {
         this._merchant = MERCHANT;
         this._version = '';
         this._wallet = '';
@@ -79,20 +79,18 @@ export default class MinterConnect {
         this.notifySubscribers(ObservableProps.Wallet, value);
     }
     /**
-     * Send connect request to content script (reveal active wallet address)
+     * Send conect request to content script (reveal active wallet address)
      */
     connectRequest() {
-        if (!this.isUnlocked)
-            return Promise.reject('Extension locked');
         return new Promise((resolve, reject) => {
             const detail = {
                 merchant: this.merchant
             };
             document.addEventListener(MinterLinkEvent.ConnectAccept, event => {
-                return resolve(event.detail);
+                resolve(event.detail);
             });
-            document.addEventListener(MinterLinkEvent.ConnectReject, () => {
-                return reject('Rejected by user');
+            document.addEventListener(MinterLinkEvent.ConnectReject, event => {
+                reject(event);
             });
             const event = new CustomEvent(MinterLinkEvent.ConnectRequest, { detail });
             document.dispatchEvent(event);
@@ -104,10 +102,6 @@ export default class MinterConnect {
      * @param message
      */
     signRequest(message) {
-        if (!this.isUnlocked)
-            return Promise.reject('Extension locked');
-        if (!this.wallet)
-            return Promise.reject('Wallet is empty');
         return new Promise((resolve, reject) => {
             const detail = {
                 merchant: this.merchant,
@@ -118,8 +112,8 @@ export default class MinterConnect {
             document.addEventListener(MinterLinkEvent.SignAccept, event => {
                 resolve(event.detail);
             });
-            document.addEventListener(MinterLinkEvent.SignReject, () => {
-                return reject('Rejected by user');
+            document.addEventListener(MinterLinkEvent.SignReject, event => {
+                reject(event);
             });
             const event = new CustomEvent(MinterLinkEvent.SignRequest, { detail });
             document.dispatchEvent(event);
@@ -131,18 +125,16 @@ export default class MinterConnect {
      * @param data
      */
     paymentRequest(data) {
-        if (!this.isUnlocked)
-            return Promise.reject('Extension locked');
         return new Promise((resolve, reject) => {
             const detail = {
                 merchant: this.merchant,
                 data
             };
             document.addEventListener(MinterLinkEvent.PaymentAccept, event => {
-                resolve(event.detail);
+                resolve(event);
             });
-            document.addEventListener(MinterLinkEvent.PaymentReject, () => {
-                return reject('Rejected by user');
+            document.addEventListener(MinterLinkEvent.PaymentReject, event => {
+                reject(event);
             });
             const event = new CustomEvent(MinterLinkEvent.PaymentRequest, { detail });
             document.dispatchEvent(event);
