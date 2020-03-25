@@ -1,21 +1,28 @@
 {
   "name": "minter-connect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Connect your website to Minter network",
   "repository": {
     "type": "git",
     "url": "https://github.com/minterscan/minter_connect"
   },
-  "main": "dist/index.js",
+  "main": "dist/index.ts",
   "typings": "typings.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^25.1.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^25.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
   }
 }
