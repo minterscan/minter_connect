@@ -1,7 +1,7 @@
-![Logo](img/minter-logo.svg)
+![Logo](./img/minter-logo.svg)
 
 
-[![NPM Package](https://img.shields.io/npm/v/minter-connect.svg?style=flat-square)](https://www.npmjs.org/package/minter-connect)
+[![NPM Package](https://img.shields.io/npm/v/minter-connect?style=flat)](https://www.npmjs.org/package/minter-connect)
 [![Coverage Status](https://coveralls.io/repos/github/minterscan/minter_connect/badge.svg?branch=master)](https://coveralls.io/github/minterscan/minter_connect?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/minterscan/minter_connect/blob/master/LICENSE)
 
