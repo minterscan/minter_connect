@@ -10,7 +10,8 @@
   "typings": "typings.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "test-coveralls": "jest --coverage && coveralls < coverage/lcov.info"
   },
   "author": "",
   "license": "MIT",
