@@ -1,12 +1,12 @@
 {
   "name": "minter-connect",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Connect your website to Minter network",
   "repository": {
     "type": "git",
     "url": "https://github.com/minterscan/minter_connect"
   },
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "typings": "typings.d.ts",
   "scripts": {
     "build": "tsc",
