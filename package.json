@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "test-coveralls": "jest --coverage && coveralls < coverage/lcov.info"
+    "test-coveralls": "jest --coverage"
   },
   "author": "",
   "license": "MIT",
