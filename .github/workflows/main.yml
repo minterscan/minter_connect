@@ -5,7 +5,7 @@ name: Test Coveralls
 jobs:
 
   build:
-    name: Build
+    name: Test coverage
     runs-on: ubuntu-latest
     steps:
 
@@ -20,7 +20,7 @@ jobs:
       run: npm install
 
     - name: Run tests
-      run: npm test
+      run: npm run test-coveralls
 
     - name: Coveralls
       uses: coverallsapp/github-action@master
