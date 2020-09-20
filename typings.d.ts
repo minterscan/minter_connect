@@ -7,7 +7,7 @@ declare module 'minter-connect' {
     isUnlocked: boolean;
     data: MinterLink;
 
-    constructor(merchantName = '');
+    constructor(merchantName: string);
 
     listen(): void;
     subscribe(property: string, callback: Function): void;
