@@ -1,5 +1,5 @@
 import MinterConnect from './MinterConnect';
-import { MinterLinkEvent } from './model';
-export { MinterLinkEvent };
+import { MinterLinkEvent, MinterLinkObservableProps } from './model';
+export { MinterLinkEvent, MinterLinkObservableProps };
 export default MinterConnect;
 //# sourceMappingURL=index.js.map

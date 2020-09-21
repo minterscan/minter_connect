@@ -1,10 +1,10 @@
-export var ObservableProps;
-(function (ObservableProps) {
-    ObservableProps["IsInstalled"] = "isInstalled";
-    ObservableProps["IsUnlocked"] = "isUnlocked";
-    ObservableProps["Version"] = "version";
-    ObservableProps["Wallet"] = "wallet";
-})(ObservableProps || (ObservableProps = {}));
+export var MinterLinkObservableProps;
+(function (MinterLinkObservableProps) {
+    MinterLinkObservableProps["IsInstalled"] = "isInstalled";
+    MinterLinkObservableProps["IsUnlocked"] = "isUnlocked";
+    MinterLinkObservableProps["Version"] = "version";
+    MinterLinkObservableProps["Wallet"] = "wallet";
+})(MinterLinkObservableProps || (MinterLinkObservableProps = {}));
 export var MinterLinkEvent;
 (function (MinterLinkEvent) {
     MinterLinkEvent["Version"] = "minter:version";

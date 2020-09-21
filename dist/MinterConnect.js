@@ -1,4 +1,4 @@
-import { MinterLinkEvent, ObservableProps } from './model';
+import { MinterLinkEvent, MinterLinkObservableProps } from './model';
 const MERCHANT = {
     name: '',
     url: '',
@@ -11,10 +11,10 @@ export default class MinterConnect {
         this._isInstalled = false;
         this._isUnlocked = false;
         this._observers = {
-            version: [],
-            wallet: [],
-            isInstalled: [],
-            isUnlocked: []
+            [MinterLinkObservableProps.Version]: [],
+            [MinterLinkObservableProps.Wallet]: [],
+            [MinterLinkObservableProps.IsInstalled]: [],
+            [MinterLinkObservableProps.IsUnlocked]: []
         };
         this.listen();
         this.setMerchantName(merchantName);
@@ -64,19 +64,19 @@ export default class MinterConnect {
     }
     setVersion(value) {
         this._version = value;
-        this.notifySubscribers(ObservableProps.Version, value);
+        this.notifySubscribers(MinterLinkObservableProps.Version, value);
     }
     setIsInstalled(value) {
         this._isInstalled = value;
-        this.notifySubscribers(ObservableProps.IsInstalled, value);
+        this.notifySubscribers(MinterLinkObservableProps.IsInstalled, value);
     }
     setIsUnlocked(value) {
         this._isUnlocked = value;
-        this.notifySubscribers(ObservableProps.IsUnlocked, value);
+        this.notifySubscribers(MinterLinkObservableProps.IsUnlocked, value);
     }
     setWallet(value) {
         this._wallet = value;
-        this.notifySubscribers(ObservableProps.Wallet, value);
+        this.notifySubscribers(MinterLinkObservableProps.Wallet, value);
     }
     /**
      * Send connect request to content script (reveal active wallet address)

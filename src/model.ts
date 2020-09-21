@@ -1,4 +1,4 @@
-export enum ObservableProps {
+export enum MinterLinkObservableProps {
   IsInstalled = 'isInstalled',
   IsUnlocked = 'isUnlocked',
   Version = 'version',
@@ -6,17 +6,17 @@ export enum ObservableProps {
 }
 
 export type MinterLink = {
-  [ObservableProps.Version]: string;
-  [ObservableProps.Wallet]: string;
-  [ObservableProps.IsInstalled]: boolean;
-  [ObservableProps.IsUnlocked]: boolean;
+  [MinterLinkObservableProps.Version]: string;
+  [MinterLinkObservableProps.Wallet]: string;
+  [MinterLinkObservableProps.IsInstalled]: boolean;
+  [MinterLinkObservableProps.IsUnlocked]: boolean;
 }
 
-export type Observers = {
-  [ObservableProps.IsInstalled]: Function[];
-  [ObservableProps.IsUnlocked]: Function[];
-  [ObservableProps.Version]: Function[];
-  [ObservableProps.Wallet]: Function[];
+export type MinterLinkObservers = {
+  [MinterLinkObservableProps.IsInstalled]: Function[];
+  [MinterLinkObservableProps.IsUnlocked]: Function[];
+  [MinterLinkObservableProps.Version]: Function[];
+  [MinterLinkObservableProps.Wallet]: Function[];
 }
 
 export type TxData = {

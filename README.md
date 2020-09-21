@@ -9,7 +9,7 @@
 
 With Minter Connect you can connect your website to extension, get access to user wallet address, implement Minter authentication and even make one-click payment requests.
 
-Check [MinterLink Playground](https://github.com/minterscan/minter_link_playground) for live demo.
+Check [Minter Link Playground](https://github.com/minterscan/minter_link_playground) for live demo.
 
 ## Installation
 ```
@@ -33,21 +33,21 @@ Following events are available for subscription:
 * MinterLinkEvent.Wallet
 
 ```
-import { MinterLinkEvent } from 'minter-connect'
+import { MinterLinkObservableProps } from 'minter-connect'
 
-minterConnect.subscribe(MinterLinkEvent.IsInstalled, (value: boolean) => {
+minterConnect.subscribe(MinterLinkObservableProps.IsInstalled, (value: boolean) => {
   console.log('Extension installed:', value)
 })
 
-minterConnect.subscribe(MinterLinkEvent.IsUnlocked, (value: boolean) => {
+minterConnect.subscribe(MinterLinkObservableProps.IsUnlocked, (value: boolean) => {
   console.log('Extension unlocked:', value)
 })
 
-minterConnect.subscribe(MinterLinkEvent.Version, (value: string) => {
+minterConnect.subscribe(MinterLinkObservableProps.Version, (value: string) => {
   console.log('Extension version:', value)
 })
 
-minterConnect.subscribe(MinterLinkEvent.Wallet, (value: string) => {
+minterConnect.subscribe(MinterLinkObservableProps.Wallet, (value: string) => {
   console.log('Active Wallet:', value)
 })
 ```

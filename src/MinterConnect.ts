@@ -2,11 +2,11 @@ import {
   MinterLink,
   MinterLinkEvent,
   Merchant,
-  Observers,
+  MinterLinkObservers,
   TxData,
   SignRequest,
   PaymentRequest,
-  ObservableProps,
+  MinterLinkObservableProps,
   SignResponse
 } from './model'
 
@@ -21,11 +21,11 @@ export default class MinterConnect {
   private _wallet = ''
   private _isInstalled = false
   private _isUnlocked = false
-  private _observers: Observers = {
-    version: [],
-    wallet: [],
-    isInstalled: [],
-    isUnlocked: []
+  private _observers: MinterLinkObservers = {
+    [MinterLinkObservableProps.Version]: [],
+    [MinterLinkObservableProps.Wallet]: [],
+    [MinterLinkObservableProps.IsInstalled]: [],
+    [MinterLinkObservableProps.IsUnlocked]: []
   }
 
   constructor(merchantName = '') {
@@ -90,25 +90,25 @@ export default class MinterConnect {
   private setVersion(value: string): void {
     this._version = value
 
-    this.notifySubscribers(ObservableProps.Version, value)
+    this.notifySubscribers(MinterLinkObservableProps.Version, value)
   }
 
   private setIsInstalled(value: boolean): void {
     this._isInstalled = value
 
-    this.notifySubscribers(ObservableProps.IsInstalled, value)
+    this.notifySubscribers(MinterLinkObservableProps.IsInstalled, value)
   }
 
   private setIsUnlocked(value: boolean): void {
     this._isUnlocked = value
 
-    this.notifySubscribers(ObservableProps.IsUnlocked, value)
+    this.notifySubscribers(MinterLinkObservableProps.IsUnlocked, value)
   }
 
   private setWallet(value: string): void {
     this._wallet = value
 
-    this.notifySubscribers(ObservableProps.Wallet, value)
+    this.notifySubscribers(MinterLinkObservableProps.Wallet, value)
   }
 
   /**
