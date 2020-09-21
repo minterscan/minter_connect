@@ -19,7 +19,7 @@ npm install minter-connect
 ## Initialize
 Minter Connect takes optional `merchant name` parameter on initialization.
 
-```
+```typescript
 import MinterConnect from 'minter-connect'
 
 const minterConnect = new MinterConnect('My website')
@@ -32,7 +32,7 @@ Following events are available for subscription:
 * MinterLinkEvent.Version
 * MinterLinkEvent.Wallet
 
-```
+```typescript
 import { MinterLinkObservableProps } from 'minter-connect'
 
 minterConnect.subscribe(MinterLinkObservableProps.IsInstalled, (value: boolean) => {
@@ -55,7 +55,7 @@ minterConnect.subscribe(MinterLinkObservableProps.Wallet, (value: string) => {
 ## Connect Request
 Request permanent access to  user's active wallet:
 
-```
+```typescript
 minterConnect.connectRequest()
   .then((wallet: string) => {
     // Connect accepted, wallet address returned
@@ -70,7 +70,7 @@ minterConnect.connectRequest()
 ## Sign Request
 Request message, signed with connected wallet private key:
 
-```
+```typescript
 import { SignResponse } from 'minter-connect'
 
 minterConnect.signRequest('Message')
@@ -90,7 +90,7 @@ minterConnect.signRequest('Message')
 ## Payment request
 Prepare payment request data & await for response from user:
 
-```
+```typescript
 const data = {
   address: 'Mx...',    // Payment address
   amount: 1,           // Payment amount
