@@ -12,7 +12,7 @@ declare module 'minter-connect' {
     listen(): void;
     subscribe(property: string, callback: Function): void;
 
-    signRequest(message: string): Promise<SignResponse>;
+    signRequest(message: string): Promise<string>;
     connectRequest(): Promise<string>;
     paymentRequest(data: TxData): Promise<string>;
   }

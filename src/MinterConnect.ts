@@ -141,7 +141,7 @@ export default class MinterConnect {
    *
    * @param message
    */
-  public signRequest(message: string): Promise<SignResponse> {
+  public signRequest(message: string): Promise<string> {
     if (!this.isUnlocked) return Promise.reject('Extension locked')
     if (!this.wallet) return Promise.reject('Wallet is empty')
 
@@ -154,7 +154,7 @@ export default class MinterConnect {
       }
 
       document.addEventListener(MinterLinkEvent.SignAccept, event => {
-        resolve((event as CustomEvent).detail)
+        return resolve((event as CustomEvent).detail)
       })
 
       document.addEventListener(MinterLinkEvent.SignReject, () => {
@@ -182,7 +182,7 @@ export default class MinterConnect {
       }
 
       document.addEventListener(MinterLinkEvent.PaymentAccept, event => {
-        resolve((event as CustomEvent).detail)
+        return resolve((event as CustomEvent).detail)
       })
 
       document.addEventListener(MinterLinkEvent.PaymentReject, () => {
