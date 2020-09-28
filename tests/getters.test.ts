@@ -1,5 +1,5 @@
 import MinterConnect from '../src/MinterConnect'
-import { MinterLinkEvent, ObservableProps } from '../src/model'
+import { MinterLinkEvent, MinterLinkObservableProps } from '../src/model'
 import {
   isInstalled,
   isUnlocked,
@@ -16,7 +16,7 @@ beforeAll(() => {
 
 
 it('Set Extension installed', () => {
-  instance.subscribe(ObservableProps.IsInstalled, (value: boolean) => {
+  instance.subscribe(MinterLinkObservableProps.IsInstalled, (value: boolean) => {
     expect(value).toEqual(isInstalled)
     expect(instance.isInstalled).toEqual(isInstalled)
   })
@@ -26,7 +26,7 @@ it('Set Extension installed', () => {
 })
 
 it('Set Extension version', () => {
-  instance.subscribe(ObservableProps.Version, (value: string) => {
+  instance.subscribe(MinterLinkObservableProps.Version, (value: string) => {
     expect(value).toEqual(version)
     expect(instance.version).toEqual(version)
   })
@@ -36,7 +36,7 @@ it('Set Extension version', () => {
 })
 
 it('Set Extension unlocked', () => {
-  instance.subscribe(ObservableProps.IsUnlocked, (value: boolean) => {
+  instance.subscribe(MinterLinkObservableProps.IsUnlocked, (value: boolean) => {
     expect(value).toEqual(isUnlocked)
     expect(instance.isUnlocked).toEqual(isUnlocked)
   })
@@ -46,7 +46,7 @@ it('Set Extension unlocked', () => {
 })
 
 it('Set Extension active wallet', () => {
-  instance.subscribe(ObservableProps.Wallet, (value: string) => {
+  instance.subscribe(MinterLinkObservableProps.Wallet, (value: string) => {
     expect(value).toEqual(wallet)
     expect(instance.wallet).toEqual(wallet)
   })
@@ -58,7 +58,7 @@ it('Set Extension active wallet', () => {
 it('Notify subscriber', () => {
   const callback = jest.fn()
 
-  instance.subscribe(ObservableProps.Wallet, callback)
+  instance.subscribe(MinterLinkObservableProps.Wallet, callback)
 
   const walletEvent = new CustomEvent(MinterLinkEvent.Wallet, { detail: wallet })
   document.dispatchEvent(walletEvent)    

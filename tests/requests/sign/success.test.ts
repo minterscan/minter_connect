@@ -5,7 +5,6 @@ import {
   isUnlocked,
   wallet,
   merchantName,
-  personalMessage,
   signature
 } from './../../utils'
 
@@ -25,16 +24,11 @@ beforeAll(() => {
 
 it('Resolve sign request successfully', async () => {
   document.addEventListener(MinterLinkEvent.SignRequest, () => {
-    const acceptEvent = new CustomEvent(MinterLinkEvent.SignAccept, { detail: {
-      personalMessage,
-      signature
-    } })
+    const acceptEvent = new CustomEvent(MinterLinkEvent.SignAccept, { detail: signature })
 
     document.dispatchEvent(acceptEvent)
   })
 
   const response = await instance.signRequest('')
-
-  expect(response.personalMessage).toEqual(personalMessage)
-  expect(response.signature).toEqual(signature)
+  expect(response).toEqual(signature)
 })
