@@ -116,7 +116,7 @@ export default class MinterConnect {
                 }
             };
             document.addEventListener(MinterLinkEvent.SignAccept, event => {
-                resolve(event.detail);
+                return resolve(event.detail);
             });
             document.addEventListener(MinterLinkEvent.SignReject, () => {
                 return reject('Rejected by user');
@@ -139,7 +139,7 @@ export default class MinterConnect {
                 data
             };
             document.addEventListener(MinterLinkEvent.PaymentAccept, event => {
-                resolve(event.detail);
+                return resolve(event.detail);
             });
             document.addEventListener(MinterLinkEvent.PaymentReject, () => {
                 return reject('Rejected by user');
