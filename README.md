@@ -27,10 +27,10 @@ const minterConnect = new MinterConnect('My website')
 
 ## Subscribe
 Following events are available for subscription:
-* MinterLinkEvent.IsInstalled
-* MinterLinkEvent.IsUnlocked
-* MinterLinkEvent.Version
-* MinterLinkEvent.Wallet
+* MinterLinkObservableProps.IsInstalled
+* MinterLinkObservableProps.IsUnlocked
+* MinterLinkObservableProps.Version
+* MinterLinkObservableProps.Wallet
 
 ```typescript
 import { MinterLinkObservableProps } from 'minter-connect'
@@ -74,12 +74,9 @@ Request message, signed with connected wallet private key:
 import { SignResponse } from 'minter-connect'
 
 minterConnect.signRequest('Message')
-  .then((response: SignResponse) => {
-    // Signed message (0x-prefixed hex string)
-    console.log(response.personalMessage)
-
-    // ECDSASignature (0x-prefixed hex string)
-    console.log(response.signature)
+  .then((signature: string) => {
+    // ECDSA Signature (0x-prefixed hex string)
+    console.log(signature)
   })
   .catch(() => {
     // Sign rejected
